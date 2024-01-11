@@ -2,6 +2,7 @@ const questionService = require("../DB/questionModel");
 
 const addQuestion = async (req, res) => {
   const { question_val, answer_type, right_answer } = req.body;
+  if(!question_val || !answer_type) return
   try {
     const result = await questionService.addQuestion(
       question_val,
@@ -63,9 +64,16 @@ const getQuestions = async (req, res) => {
     console.error(error);
   }
 };
-
+const getAnswersTypes = async (req, res)=>{
+  const results = await questionService.getAnswersTypes()
+  const mapedRes = results[0].map((answer)=>answer.answer_id)
+  let unique = [...new Set(mapedRes)];
+  console.log(unique);
+  res.status(200).json(unique)
+}
 
 module.exports.getQuestions = getQuestions;
 module.exports.getVotes = getVotes;
 module.exports.addQuestion = addQuestion;
 module.exports.insertAnswer = insertAnswer;
+module.exports.getAnswersTypes = getAnswersTypes;

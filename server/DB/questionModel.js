@@ -54,7 +54,6 @@ const getVotes = (ansered_value) => {
   );
 };
 const countResults = (question_id, answered_value) => {
-  console.log(question_id, answered_value);
   return db.execute(
     `
     SELECT 
@@ -65,6 +64,12 @@ const countResults = (question_id, answered_value) => {
     [question_id, answered_value]
   );
 };
+const getAnswersTypes = () => {
+  return db.execute(
+    `
+    SELECT answer_id FROM questionare.answers_type;
+    `)
+}
 
 module.exports.getAllQuestions = getAllQuestions;
 module.exports.getVotes = getVotes;
@@ -73,3 +78,4 @@ module.exports.addQuestion = addQuestion;
 module.exports.getAnswersOptions = getAnswersOptions;
 module.exports.insertAnswer = insertAnswer;
 module.exports.countResults = countResults;
+module.exports.getAnswersTypes = getAnswersTypes;
